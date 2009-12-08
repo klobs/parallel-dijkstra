@@ -1,6 +1,6 @@
 #include "dijkstra.h"
 
-int add_neighbours_to_active_set(int node, unsigned int *visited, 
+listp *add_neighbours_to_active_set(int node, unsigned int *visited, 
 		unsigned int *mpointer, listp *active_set) { 
 
 	int i; 
@@ -9,7 +9,7 @@ int add_neighbours_to_active_set(int node, unsigned int *visited,
 	// Es gibt keine Adjazenzmatrix
 	if (!mpointer) {
 		printf("Error: no pointer to a valid matrix\n");
-		return -1;
+		return 0;
 	}
 	
 		// Gehe die zu node gehoerende Zeile der Matrix durch, um die 
@@ -25,7 +25,7 @@ int add_neighbours_to_active_set(int node, unsigned int *visited,
 				tmplpointer1 = malloc( sizeof(listp) );
 				if (!tmplpointer1) {
 					printf("Error: could not reserve memory for the list\n");
-					return -1;
+					return 0;
 				}
 
 //				tmplpointer1->distance_from_root_node	= *(mpointer + i);
@@ -46,11 +46,8 @@ int add_neighbours_to_active_set(int node, unsigned int *visited,
 					tmplpointer2->next = tmplpointer1;
 				}
 			}
-			return 1;
+			return active_set;
 		}
-
-	
-
-	return -1;
+	return 0;
 }
 
