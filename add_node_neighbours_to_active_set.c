@@ -1,15 +1,16 @@
 #include "dijkstra.h"
 
-int add_neighbours_to_active_set(int node, unsigned int *visited, 
-		unsigned int *mpointer, listp *active_set) { 
+listp *add_node_neighbours_to_active_set(unsigned int node, sets *s)
+{
 
-	int i; 
-	listp *tmplpointer1, *tmplpointer2;
+	unsigned int i; 
+	listp *tmp1;//, *tmp2;
+	listp *as = s->active_set;
 	
-	// Es gibt keine Adjazenzmatrix
-	if (!mpointer) {
+	/* Es gibt keine Adjazenzmatrix */
+	if (!s->adjmatrix) {
 		printf("Error: no pointer to a valid matrix\n");
-		return -1;
+		return 0;
 	}
 	
 		// Gehe die zu node gehoerende Zeile der Matrix durch, um die 
@@ -19,38 +20,34 @@ int add_neighbours_to_active_set(int node, unsigned int *visited,
 			// Falls eine Verbindung zu anderen Knoten existiert 
 			// (in der Zeile durch einen Wert > 0 gekennzeichnet)
 			// und der Knoten nich schon besucht ist, 
-			// füge die Verbindung zum Active Set hinzu.
-			if ((*(mpointer + 1) > 0) && ( *(visited + i) < 1)) {
+			// füge die Verbindung geordnet zum Active Set hinzu.
+			if ((*(s->adjmatrix + node * NODES + i) > 0) && (*(s->visited + i) < 1)) {
 
-				tmplpointer1 = malloc( sizeof(listp) );
-				if (!tmplpointer1) {
+				tmp1 = malloc(sizeof(listp));
+				if (!tmp1) {
 					printf("Error: could not reserve memory for the list\n");
-					return -1;
+					return 0;
 				}
 
-//				tmplpointer1->distance_from_root_node	= *(mpointer + i);
-				tmplpointer1->weight					= *(mpointer + i);
-				tmplpointer1->node_id					= i;
-				tmplpointer1->prev_node_id				= node;
-				tmplpointer1->next						= NULL;
-				
-				if(! active_set){
-					active_set = tmplpointer1;
+				tmp1->distance_from_root_node	= (unsigned int) *(s->adjmatrix + node * NODES + i) +
+					get_distance_from_root_node(node, s);
+				tmp1->weight					= (unsigned char) *(s->adjmatrix + node * NODES + i);
+				tmp1->node_id					= i;
+				tmp1->prev_node_id				= node;
+				tmp1->next						= NULL;
+				tmp1->prev						= NULL;
+
+				if(! as ){
+					s->active_set = tmp1;
+					as = tmp1;
 				}
 				else {
-					tmplpointer2 = active_set;
-					// An das Ende hangeln
-					while (tmplpointer2->next){
-						tmplpointer2 = tmplpointer2->next;
-					}
-					tmplpointer2->next = tmplpointer1;
+					tmp1->next = as;
+					as->prev   = tmp1;
+					as = tmp1;	
 				}
 			}
-			return 1;
 		}
-
-	
-
-	return -1;
+	return as;
 }
 

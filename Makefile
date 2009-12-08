@@ -1,28 +1,46 @@
 GCC=gcc
-CFLAGS= -O2
+CFLAGS= -g -Wall
 
 all: dijkstra
 
+me_happy: clean all
+
 dijkstra.o:
-	$(GCC) -c dijkstra.c
+	$(GCC) $(CFLAGS) -c dijkstra.c
 
 add_node_neighbours_to_active_set.o:
-	$(GCC) -c add_node_neighbours_to_active_set.c
+	$(GCC) $(CFLAGS) -c add_node_neighbours_to_active_set.c
+
+add_node_to_solution_set.o:
+	$(GCC) $(CFLAGS) -c add_node_to_solution_set.c
+
+free_solution_set.o:
+	$(GCC) $(CFLAGS) -c free_solution_set.c
 
 get_first_minimum_out_of_active_set.o:
-	$(GCC) -c get_first_minimum_out_of_active_set.c
+	$(GCC) $(CFLAGS) -c get_first_minimum_out_of_active_set.c
   
+get_shortest_paths.o:  
+	$(GCC) $(CFLAGS) -c get_shortest_paths.c
 
-get_shortests_paths.o:  
-	$(GCC) -c get_shortests_paths.c
+get_distance_from_root_node.o:
+	$(GCC) $(CFLAGS) -c get_distance_from_root_node.c
 
 
 init_matrix.o:
-	$(GCC) -c init_matrix.c
+	$(GCC) $(CFLAGS) -c init_matrix.c
+
+print_solution_set.o:
+	$(GCC) $(CFLAGS) -c print_solution_set.c
 
 
-dijkstra: add_node_neighbours_to_active_set.o  dijkstra.o  get_first_minimum_out_of_active_set.o  get_shortests_paths.o  init_matrix.o
-	$(GCC) $(CFLAGS) -o dijkstra add_node_neighbours_to_active_set.o  dijkstra.o  get_first_minimum_out_of_active_set.o  get_shortests_paths.o  init_matrix.o 
+dijkstra: add_node_neighbours_to_active_set.o add_node_to_solution_set.o dijkstra.o free_solution_set.o  get_distance_from_root_node.o get_first_minimum_out_of_active_set.o  get_shortest_paths.o  init_matrix.o print_solution_set.o
+	$(GCC) $(CFLAGS) -o dijkstra add_node_neighbours_to_active_set.o add_node_to_solution_set.o free_solution_set.o get_distance_from_root_node.o get_first_minimum_out_of_active_set.o  get_shortest_paths.o  init_matrix.o print_solution_set.o dijkstra.o
 	
-clean:
+clean: 
 	rm *.o dijkstra
+
+cp:
+	rm *.path
+
+mrproper: cp clean

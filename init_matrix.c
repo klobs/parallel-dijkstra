@@ -1,6 +1,6 @@
 #include "dijkstra.h"
 
-int init_matrix(int *mpointer)
+unsigned int init_matrix(unsigned char *mpointer)
 {
 	unsigned int j=0, i=0;
 
@@ -8,7 +8,7 @@ int init_matrix(int *mpointer)
 
 	for(i=0;i<NODES;i++) {
 		for(j=0; j<NODES; j++) {
-			unsigned int r = random() % MAX_WEIGHT;
+			unsigned char r = (unsigned char) random() % MAX_WEIGHT;
 			*(mpointer + NODES * i + j) = r;
 			*(mpointer + NODES * j + i) = r;
 		}
