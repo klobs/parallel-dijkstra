@@ -41,9 +41,15 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 		}
 	}
 	
+	FILE *fp = fopen("path", "a");
 	printf("Paths for node %d\n", node);
+	fprintf(fp, "Paths for node %d\n", node);
 	while( s.solution_set ){
-		printf("\tNode %2d via node %2d, distance %2d\n", 
+		fprintf(fp,"\tNode %3d via node %3d, distance %3d\n", 
+				s.solution_set->node_id, 
+				s.solution_set->prev_node_id, 
+				s.solution_set->distance_from_root_node);
+		printf("\tNode %3d via node %3d, distance %3d\n", 
 				s.solution_set->node_id, 
 				s.solution_set->prev_node_id, 
 				s.solution_set->distance_from_root_node);
@@ -51,6 +57,7 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 		s.solution_set = s.solution_set->next;
 		free(t);	
 	}
+	fclose(fp);
 	return 0;
 }
 
