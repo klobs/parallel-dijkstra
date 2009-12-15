@@ -1,7 +1,6 @@
 #include "dijkstra.h"
 
 int main( void )
-
 {
 
 	unsigned int j=0, i=0;

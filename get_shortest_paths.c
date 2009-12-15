@@ -34,7 +34,7 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 		if (!s.visited[t->node_id]){
 			s.visited[t->node_id] = 1;	
 			add_node_to_solution_set(t,&s);
-			// TODO for new nodes form active sets: add node to neighbours:w
+			s.active_set = add_node_neighbours_to_active_set( t->node_id, &s);
 		}
 		else{
 			free(t);
@@ -42,8 +42,8 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 	}
 	
 	printf("Paths for node %d\n", node);
-	while( s.solution_set && s.solution_set->next){
-		printf("\tNode %d via node %d, distance %d\n", 
+	while( s.solution_set ){
+		printf("\tNode %2d via node %2d, distance %2d\n", 
 				s.solution_set->node_id, 
 				s.solution_set->prev_node_id, 
 				s.solution_set->distance_from_root_node);
@@ -51,7 +51,6 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 		s.solution_set = s.solution_set->next;
 		free(t);	
 	}
-
 	return 0;
 }
 

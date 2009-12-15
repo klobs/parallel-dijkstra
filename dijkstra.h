@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NODES		4
-#define MAX_WEIGHT 	20
+#define NODES		20
+#define MAX_WEIGHT  99	
 
 typedef struct listp_s listp;
 typedef struct sets_s sets;

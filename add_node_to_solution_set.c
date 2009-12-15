@@ -2,15 +2,16 @@
 
 int add_node_to_solution_set(listp *n, sets *s)
 {
-	if (! s->solution_set ){
+	listp *t = s->solution_set;
+	if (! t){
 		s->solution_set = n;
 		return 1;
 	}
-	while( (s->solution_set)->next ){
-		s->solution_set = (s->solution_set)->next;
+	while( t->next ){
+		t = t->next;
 	}
 	n->next = NULL;
-	n->prev = s->solution_set;
-	(s->solution_set)->next = n;
+	n->prev = t;
+	t->next = n;
 	return 1;
 }
