@@ -1,6 +1,6 @@
 #include "dijkstra.h"
 
-int init_matrix(int *mpointer)
+unsigned int init_matrix(unsigned int *mpointer)
 {
 	unsigned int j=0, i=0;
 
