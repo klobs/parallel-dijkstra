@@ -34,6 +34,7 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 		if (!s.visited[t->node_id]){
 			s.visited[t->node_id] = 1;	
 			add_node_to_solution_set(t,&s);
+			// TODO for new nodes form active sets: add node to neighbours:w
 		}
 		else{
 			free(t);
