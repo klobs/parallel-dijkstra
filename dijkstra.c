@@ -5,6 +5,7 @@ int main( void )
 
 	unsigned int j=0, i=0;
 	unsigned char matrix[NODES][NODES];
+	sets *w = NULL;
 
 	if(! init_matrix((unsigned char*) matrix)) {
 		printf("   |");
@@ -26,7 +27,9 @@ int main( void )
 		}	
 
 		for(i=0; i<NODES; i++){
-			get_shortest_paths( i, (unsigned char*) matrix);
+			w = get_shortest_paths( i, (unsigned char*) matrix);
+			print_solution_set( i, w );
+			free_solution_set( w );	
 		}
 	}
 	else return 0;

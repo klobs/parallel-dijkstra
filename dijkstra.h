@@ -3,8 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#define NODES		20
+#define NODES		99
 #define MAX_WEIGHT  99	
 
 typedef struct listp_s listp;
@@ -31,9 +32,11 @@ struct sets_s
 
 listp*			add_node_neighbours_to_active_set(unsigned int, sets*);
 int				add_node_to_solution_set(listp*, sets*);
+void 			free_solution_set(sets*);
 unsigned int 	get_distance_from_root_node(unsigned int, sets*);
 listp*			get_first_minimum_out_of_active_set(sets*);
-int 			get_shortest_paths(unsigned int, unsigned char*);
+sets* 			get_shortest_paths(unsigned int, unsigned char*);
 unsigned int 	init_matrix(unsigned char *);
+void		 	print_solution_set(int,sets*); 
 
 #endif
