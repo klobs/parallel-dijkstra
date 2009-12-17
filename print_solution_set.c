@@ -23,13 +23,14 @@ void print_solution_set(int node, sets *s)
 		}
 
 	}	
+	fclose(fh);
 
-//	printf("Paths for node %d\n", node);
-//	while( w ){
-//		printf("\tNode %2d via node %2d, distance %2d\n", 
-//				w->node_id, 
-//				w->prev_node_id, 
-//				w->distance_from_root_node);
-//		w = w->next;
-//	}
+	printf("Paths for node %d\n", node);
+	while( w ){
+		printf("\tNode %2d via node %2d, distance %2d\n", 
+				w->node_id, 
+				w->prev_node_id, 
+				w->distance_from_root_node);
+		w = w->next;
+	}
 }

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define NODES		200
 #define MAX_WEIGHT  99	
@@ -24,10 +25,12 @@ struct listp_s
 
 struct sets_s
 {
-	unsigned int visited[NODES];
+	unsigned int 	visited[NODES];
 	unsigned char   *adjmatrix;
-	listp *solution_set;
-	listp *active_set;
+	listp 			*solution_set;
+	listp 			*active_set;
+	time_t			duration_start;	
+	time_t			duration_stop;	
 };
 
 listp*			add_node_neighbours_to_active_set(unsigned int, sets*);
