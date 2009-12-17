@@ -21,6 +21,8 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 		return -1;
 	}
 
+	(s.solution_set)->next = NULL;
+	(s.solution_set)->prev = NULL;
 	(s.solution_set)->node_id = node;
 	(s.solution_set)->distance_from_root_node = 0;
 	(s.solution_set)->prev_node_id = node;

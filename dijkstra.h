@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NODES		20
+#define NODES		200
 #define MAX_WEIGHT  99	
 
 typedef struct listp_s listp;
