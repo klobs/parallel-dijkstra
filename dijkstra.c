@@ -4,9 +4,9 @@ int main( void )
 {
 
 	unsigned int j=0, i=0;
-	unsigned int matrix[NODES][NODES];
+	unsigned char matrix[NODES][NODES];
 
-	if(! init_matrix((unsigned int*) matrix)) {
+	if(! init_matrix((unsigned char*) matrix)) {
 		printf("   |");
 		for(j=0; j<NODES; j++) {
 			printf("%02d ", j);
@@ -26,7 +26,7 @@ int main( void )
 		}	
 
 		for(i=0; i<NODES; i++){
-			get_shortest_paths( i, (unsigned int*) matrix);
+			get_shortest_paths( i, (unsigned char*) matrix);
 		}
 	}
 	else return 0;

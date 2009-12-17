@@ -31,7 +31,7 @@ listp *add_node_neighbours_to_active_set(unsigned int node, sets *s)
 
 				tmp1->distance_from_root_node	= (unsigned int) *(s->adjmatrix + node * NODES + i) +
 					get_distance_from_root_node(node, s);
-				tmp1->weight					= (unsigned int) *(s->adjmatrix + node * NODES + i);
+				tmp1->weight					= (unsigned char) *(s->adjmatrix + node * NODES + i);
 				tmp1->node_id					= i;
 				tmp1->prev_node_id				= node;
 				tmp1->next						= NULL;

@@ -1,6 +1,6 @@
 #include "dijkstra.h"
 
-int get_shortest_paths(unsigned int node, unsigned int *mpointer)
+int get_shortest_paths(unsigned int node, unsigned char *mpointer)
 {
 	listp 	*t;
 	sets 	s = { 
@@ -42,7 +42,7 @@ int get_shortest_paths(unsigned int node, unsigned int *mpointer)
 			free(t);
 		}
 	}
-	
+
 	printf("Paths for node %d\n", node);
 	while( s.solution_set ){
 		printf("\tNode %2d via node %2d, distance %2d\n", 
