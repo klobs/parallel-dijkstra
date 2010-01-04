@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 		
 		j = (NODES - 1) % size;
 
-		if((rank>0) && (rank <= j)){ // lasting nodes
+		if((j>0) && (rank <= j)){ // lasting nodes
 			w = get_shortest_paths((NODES - 1 - rank), (unsigned char*) matrix);
 			print_solution_set((NODES - 1 - rank), w );
 			printf("Duration for node %2d = %d s\n", (NODES - 1 - rank), w->duration_stop - w->duration_start);
