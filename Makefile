@@ -1,5 +1,5 @@
-GCC=gcc
-CFLAGS= -g -Wall
+GCC=mpicc
+CFLAGS= -g -Wall -D MPI
 
 all: dijkstra
 
@@ -32,7 +32,6 @@ init_matrix.o:
 
 print_solution_set.o:
 	$(GCC) $(CFLAGS) -c print_solution_set.c
-
 
 dijkstra: add_node_neighbours_to_active_set.o add_node_to_solution_set.o dijkstra.o free_solution_set.o  get_distance_from_root_node.o get_first_minimum_out_of_active_set.o  get_shortest_paths.o  init_matrix.o print_solution_set.o
 	$(GCC) $(CFLAGS) -o dijkstra add_node_neighbours_to_active_set.o add_node_to_solution_set.o free_solution_set.o get_distance_from_root_node.o get_first_minimum_out_of_active_set.o  get_shortest_paths.o  init_matrix.o print_solution_set.o dijkstra.o

@@ -1,6 +1,6 @@
 #include "dijkstra.h"
 
-int main( void )
+int main(int argc, char **argv)
 {
 
 	unsigned int j=0, i=0;
@@ -8,7 +8,19 @@ int main( void )
 	sets *w = NULL;
 	FILE *fp;
 
-	if(! init_matrix((unsigned char*) matrix)) {
+#ifdef MPI
+	int rank;	// own process rank
+	int size;	// number of processes + 1
+
+	MPI_Init(&argc, &argv);
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	
+	if(! rank) j = init_matrix((unsigned char*) matrix);
+#else
+	j = init_matrix((unsigned char*) matrix);
+#endif
+	if(! j) {
 		printf("   |");
 		for(j=0; j<NODES; j++) {
 			printf("%02d ", j);
@@ -50,15 +62,42 @@ int main( void )
 			}	
 		}		
 
+#ifdef MPI
+		MPI_Bcast(matrix, NODES*NODES, MPI_UNSIGNED_CHAR, 0, MPI_COMM_WORLD);
+		j = NODES / size;
+
+		for(i=rank*j; i< ((rank+1)*j-1); i++){
+			w = get_shortest_paths( i, (unsigned char*) matrix);
+			print_solution_set( i, w );
+			printf("Duration for node %2d = %d s\n", i, w->duration_stop - w->duration_start);
+			free_solution_set( w );	
+		}
+		
+		j = (NODES - 1) % size;
+
+		if((rank>0) && (rank <= j)){ // lasting nodes
+			w = get_shortest_paths((NODES - 1 - rank), (unsigned char*) matrix);
+			print_solution_set((NODES - 1 - rank), w );
+			printf("Duration for node %2d = %d s\n", (NODES - 1 - rank), w->duration_stop - w->duration_start);
+			free_solution_set( w );	
+		}
+#else
 		for(i=0; i<NODES; i++){
 			w = get_shortest_paths( i, (unsigned char*) matrix);
 			print_solution_set( i, w );
 			printf("Duration for node %2d = %d s\n", i, w->duration_stop - w->duration_start);
 			free_solution_set( w );	
 		}
+#endif
 	}
-	else return 0;
+	else {
+		puts("ERROR: Matrix could not be initialized");
+		return 0;
+	}
 
+#ifdef MPI
+	MPI_Finalize();
+#endif
 	return 1;
 }
 
